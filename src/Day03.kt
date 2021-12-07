@@ -19,19 +19,20 @@ fun main() {
 
     fun part2(input: List<String>): Int {
         val matrix = input.map { it.map { it.digitToInt() } }
-        var oxygenMatrix = matrix
+        val oxygenMatrix = matrix.toMutableList()
+        val co2Matrix = matrix.toMutableList()
+
         for (i in 0 until matrix[0].size) {
-            val average = oxygenMatrix.map { it[i] }.average()
-            val oxygen = if(average == 0.5) 1 else average.roundToInt()
-            oxygenMatrix = oxygenMatrix.filter { it[i] == oxygen }
+            val oxygen = oxygenMatrix.map { it[i] }.average()
+                .let { if(it == 0.5) 1 else it.roundToInt() }
+            oxygenMatrix.removeIf { it[i] != oxygen }
             if(oxygenMatrix.size == 1) break
         }
 
-        var co2Matrix = matrix
         for (i in 0 until matrix[0].size) {
-            val average = co2Matrix.map { it[i] }.average()
-            val co2 = if(average == 0.5) 0 else average.roundToInt()xor(1)
-            co2Matrix = co2Matrix.filter { it[i] == co2 }
+            val co2 = co2Matrix.map { it[i] }.average()
+                .let { if(it == 0.5) 0 else it.roundToInt()xor(1) }
+            co2Matrix.removeIf { it[i] != co2 }
             if(co2Matrix.size == 1) break
         }
         val oxygen = oxygenMatrix[0].joinToString("").toInt(2)
@@ -41,11 +42,11 @@ fun main() {
     }
 
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day03_test")
+    val testInput = readInputLines("Day03_test")
     check(part1(testInput) == 198)
     check(part2(testInput) == 230)
 
-    val input = readInput("Day03")
+    val input = readInputLines("Day03")
     println(part1(input))
     println(part2(input))
 }
