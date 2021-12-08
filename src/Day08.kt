@@ -1,7 +1,6 @@
 fun main() {
     fun decodeDigit(digit: String): Int {
-        return when (// Simple length checks for digits with unique length
-            digit.length) {
+        return when (digit.length) {
             2 -> 1
             4 -> 4
             3 -> 7
