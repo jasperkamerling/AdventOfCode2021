@@ -16,7 +16,6 @@ fun main() {
             epsilonRateBin += matrix.map { it[i] }.average().roundToInt().xor(1)
         }
 
-
         return (gammaRateBin.toInt(2)) * (epsilonRateBin.toInt(2))
     }
 
